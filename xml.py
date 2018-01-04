@@ -17,6 +17,21 @@ def main(show_name, show_year):
 		gets.WriteFile.write(string_to_write, file_name)
 		print 'Done writing\n'
 		return raw_input('Please Enter another Show name: -->')
+	elif show_type == 'season':
+		tvshow = tv.TvEpisodes(show_name, show_year)
+		template.XmlTemplate.template_seasons(tvshow, show_type, file_name)
+		# print 'Writing File....\n'
+		# gets.WriteFile.write(string_to_write, file_name)
+		# print 'Done writing\n'
+		return raw_input('Please Enter another Show name: -->')
+	elif show_type == 'episode':
+		tvshow = tv.TvEpisodes(show_name, show_year)
+		template.XmlTemplate.template_episodes(tvshow, show_type, file_name)
+		# print 'Writing File....\n'
+		# gets.WriteFile.write(string_to_write, file_name)
+		# print 'Done writing\n'
+		return raw_input('Please Enter another Show name: -->')
+
 
 if __name__ == '__main__':
 	
@@ -37,7 +52,7 @@ if __name__ == '__main__':
 	if not args:
 		args = []
 		global show_type
-		show_type = raw_input('Please Enter tvshow or movie for XML type')
+		show_type = raw_input('Please Enter tvshow, movie, season, episode, for XML type')
 		get_info = raw_input('Please Enter Search Params: Movie Title\Tv Show + Year:-->')
 		for item in get_info.split(' '):
 			args.append(item)
