@@ -9,13 +9,14 @@ class TvInformation(object):
 # def tv_search(self):
         search_url  =  setting.search_url.format(base_url=setting.base_url, api_key=setting.api, tv_title=self.show_name.replace(' ', '+'), tv_year=self.show_year)
         results = get.GetRequest.request(search_url)
+        
         for i in range(len(results.get('results'))):
             if self.show_name.lower() in results['results'][i]['name'].lower() and str(self.show_year) in results['results'][i]['first_air_date']:
                 self.search_dict = results['results'][i]
         season_url = setting.season_query_url.format(base_url=setting.base_url, tv_id=self.search_dict['id'], api_key=setting.api)
         self.season = get.GetRequest.request(season_url)
         num_of_seasons = self.season['number_of_seasons']
-        
+    
         for i in range(num_of_seasons):
             episode_query_string = setting.episode_query_string.format(base_url=setting.base_url, tv_id=self.search_dict['id'], season_number=(i+1), api_key=setting.api)
             # self.season_info = TvSeasons.metas(self.season_query_string)

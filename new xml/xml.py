@@ -13,6 +13,7 @@ def main(show_name, show_year):
 		string_to_write = template.XmlTemplate.seasons(show, show_type, file_name)
 	elif 'episode' in show_type:
 		show = tv.TvInformation(show_name, show_year)
+		string_to_write = template.XmlTemplate.episodes(show, show_type, file_name)
 	else:
 		print 'Incorrect show type selected...Retry Please..'
 		sys.exit(1)

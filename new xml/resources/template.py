@@ -36,7 +36,7 @@ class XmlTemplate(object):
             poster = setting.image_base_url + show.season['seasons'][i+1]['poster_path']
             season = 'Season ' + str(i+1)
             year = show.season['seasons'][i+1]['air_date'][:4]
-            link = setting.base_host_url + '/twd/seasons/season' + str(i+1)
+            link = setting.base_host_url + file_name + '/seasons/season' + str(i+1) + '.xml'
             string_to_write = '''
 <dir>
     <name>{Title}-{Season}</name>
@@ -63,22 +63,28 @@ class XmlTemplate(object):
     
 
     @staticmethod
-    def template_episodes(show, show_type, file_name):
-        for s in range(len(show.episode_dict)):
+    def episodes(show, show_type, file_name):
+        for s in range(len(show.episodes)):
             season = 'Season ' + str(s+1)
-            print season
-            for i in range(len(show.episode_dict['season_' + str(s+1)])-1):
-                episode_number = 'Episode ' + str(i+1)
-                episode = show.episode_dict['season_' + str(s+1)]['episode_' + str(i+1)]
-                
-                string_to_write = '''
+            for e in range(len(show.episodes['season_' + str(s+1)]['episodes'])):
+                season_dict = show.episodes['season_' + str(s+1)]['episodes'][e]
+                if season_dict:
+                    episode = 'Episode ' + str(e+1).encode('utf-8')
+                    name = season_dict['name']
+                    backdrop = setting.image_base_url + season_dict['still_path']
+                    air_date = season_dict['air_date']
+                    episode_number = 'Episode ' + str(e+1).encode('utf-8')
+                    season_number = 'Season ' + str(season_dict['season_number']).encode('utf-8')
+            
+
+                    string_to_write = '''
 <item>
         <title>{Title}</title>
         <meta>
                 <content>episode</content>
                 <imdb></imdb>
                 <tvdb></tvdb>
-                <tvshowtitle>{Episode}</tvshowtitle>
+                <tvshowtitle>{Title}</tvshowtitle>
                 <year>{Year}</year>
                 <title>{Title}</title>
                 <premiered>{Year}</premiered>
@@ -90,14 +96,15 @@ class XmlTemplate(object):
                 <sublink>searchsd</sublink>
         </link>
         <animated_thumbnail></animated_thumbnail>
-        <thumbnail></thumbnail>
+        <thumbnail>{Backdrop}</thumbnail>
         <animated_fanart></animated_fanart>
-        <fanart></fanart>
-</item> \n\n\n'''.format(Title=show.original_title, Year=show.year,Episode_Number=episode_number, Backdrop=show.backdrop, Poster=show.episode_dict['season_' + str(s+1)]['poster_path'], Episode=episode, Season=season)
-                print 'Writing File....'
-                gets.WriteFile.write(string_to_write, file_name)
-                print 'Done writing.'
-
+        <fanart>{Backdrop}</fanart>
+</item> \n\n\n'''.format(Title=name, Year=air_date, Episode_Number=episode_number, Backdrop=backdrop, Episode=episode, Season=season)
+                    print 'Writing File....'
+                    get.WriteFile.write(string_to_write, file_name + 'season'+ str(s+1) + '.xml')
+                    print 'Done writing.'
+                else:
+                    print 'No Data in season'
         return
 
 

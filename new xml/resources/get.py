@@ -81,7 +81,7 @@ class GetTitle(object):  ####Gets the original title for the movie
 class WriteFile(object):  ###Takes a filename and string to write
     @staticmethod
     def write(string, filename):
-        with open(filename, 'a') as f:
+        with open(filename + '.xml', 'a') as f:
             f.write(string)
 
 class GetImdb(object):   ####gets imdb number....movie name needs to be close to exact to get correct results. Will
