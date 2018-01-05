@@ -1,5 +1,0 @@
-api 	 	        = '8fd916e0fb677558d858597cb98fa59b'
-base_url 	        = 'https://api.themoviedb.org/3/'
-image_base_url      = 'https://image.tmdb.org/t/p/original'
-search_url 	        = '{base_url}search/tv?api_key={api_key}&query={tv_title}&year{tv_year}'
-season_query_url = '{base_url}tv/{tv_id}?api_key={api_key}'
